@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot and Weather & Time Widgets</title>
+    <script type="text/javascript" src="/eel.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Container for both widgets */
+        .widget-container {
+            position: fixed;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            top: 10px;
+            padding: 0 20px;
+        }
+
+        /* Weather Widget */
+        .weather-container {
+            background-color: #1e1e1e;
+            padding: 10px;
+            border-radius: 8px;
+            width: 150px;
+            font-size: 12px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: left;
+        }
+
+        .weather-icon {
+            width: 50px;
+            height: 50px;
+            display: block;
+            margin: 5px auto;
+        }
+
+        .weather-stats, .additional-info {
+            font-size: 12px;
+        }
+
+        .time-widget {
+            background-color: #1e1e1e;
+            padding: 10px;
+            border-radius: 8px;
+            width: 100px;
+            text-align: center;
+            font-size: 12px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .widget-header {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Hello, Explorer!!</h1>
+
+    <!-- Widgets Container -->
+    <div class="widget-container">
+        <!-- Weather Widget -->
+        <div class="weather-container">
+            <h2 id="temperature">-- °C</h2>
+            <img id="weather-icon" class="weather-icon" src="" alt="Weather Icon">
+            <div class="weather-stats">
+                <div id="humidity">Humidity: --%</div>
+                <div id="wind_speed">Wind Speed: -- m/s</div>
+            </div>
+            <div class="additional-info">
+                <div id="sunrise">Sunrise: --</div>
+                <div id="sunset">Sunset: --</div>
+            </div>
+        </div>
+
+        <div class="time-widget">
+            <div class="widget-header">Current Time</div>
+            <div id="currentTime">--:--:--</div>
+        </div>
+    </div>
+
+    <!-- For animation -->
+    <div class="containe">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div>
+
+    <div id="response" style="margin-top: 20px; border: 1px solid #000; padding: 10px;">
+        <!-- AI response will be displayed here -->
+    </div>
+
+    <script src="index.js"></script>
+
+    <script>
+        eel.start_weather_updates();  // Call Python to start fetching weather
+
+        function updateWeatherUI(data) {
+            document.getElementById('temperature').innerText = `${data.temp} °C`;
+            document.getElementById('humidity').innerText = `Humidity: ${data.humidity}%`;
+            document.getElementById('wind_speed').innerText = `Wind Speed: ${data.wind_speed} m/s`;
+            document.getElementById('sunrise').innerText = `Sunrise: ${data.sunrise}`;
+            document.getElementById('sunset').innerText = `Sunset: ${data.sunset}`;
+            setWeatherIcon(data.weather_condition);
+        }
+
+        function setWeatherIcon(condition) {
+            const iconMap = {
+                'Clear': 'https://cdn-icons-png.flaticon.com/512/3222/3222807.png',
+                'Clouds': 'https://cdn-icons-png.flaticon.com/512/3222/3222807.png',
+                'Rain': 'https://cdn-icons-png.flaticon.com/512/3222/3222807.png',
+                'Snow': 'https://cdn-icons-png.flaticon.com/512/3222/3222807.png'
+            };
+            const iconUrl = iconMap[condition] || 'https://cdn-icons-png.flaticon.com/512/3222/3222807.png';
+            document.getElementById('weather-icon').src = iconUrl;
+        }
+
+        eel.expose(update_weather);
+        function update_weather(data) {
+            updateWeatherUI(data);
+        }
+
+        eel.expose(update_weather_error);
+        function update_weather_error(message) {
+            alert(message);
+        }
+
+        // Time widget function
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('currentTime').innerText = now.toLocaleTimeString();
+        }
+        setInterval(updateTime, 1000);  
+    </script>
+</body>
+
+</html>
