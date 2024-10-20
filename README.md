@@ -1,13 +1,12 @@
 # AI Vision and Weather Application
 
-This project is an interactive AI chatbot and weather application that integrates multiple technologies, including speech recognition, text-to-speech, weather updates, and real-time computer vision using a camera feed. The project uses **JavaScript**, **Python**, and **Eel** to build a web-based interface that communicates with backend systems to process speech commands and generate responses using Google's Generative AI, Gemini-1.5-flash.
+This project is an interactive AI chatbot with vision and weather application that integrates multiple technologies, including speech recognition, text-to-speech, weather updates, and real-time computer vision using a camera feed. The project uses **JavaScript**, **Python**, and **Eel** to build a web-based interface that communicates with backend systems to process speech commands and generate responses using Google's Generative AI, Gemini-1.5-flash. And also uses various API's for speech recognition.
 
 ## Features
 
 1. **Speech Recognition and Text-to-Speech**:
-   - The application listens to user speech, transcribes it, and processes commands.
-   - It uses the browser’s Speech Recognition API (`webkitSpeechRecognition` for Chrome) to capture user input.
-   - The browser’s `speechSynthesis` API is used to provide text-to-speech functionality, responding to users with spoken responses.
+   - The application listens to user speech, interpret it, and processes commands.
+   - It uses the browser’s Speech Recognition API to capture user input.
 
 2. **Generative AI**:
    - The project integrates Google's **Gemini-1.5-flash** model for AI-based content generation.
@@ -22,6 +21,8 @@ This project is an interactive AI chatbot and weather application that integrate
 
 5. **Time Widget**:
    - A clock widget displays the current time, updated every second.
+6. **IP_info**
+   - Uses the `http://ipinfo.io` for getting the approximate location based on IP address.
 
 ## Technologies Used
 
@@ -30,7 +31,7 @@ This project is an interactive AI chatbot and weather application that integrate
   - Weather data visualization and real-time updates.
   
 - **Python**:
-  - Hand gesture detection and video feed processing using **OpenCV** and **MediaPipe**.
+  - video feed processing using **OpenCV**.
   - Speech-to-text and weather data handling via API requests.
   - Communication between frontend and backend using **Eel**.
 
@@ -49,10 +50,6 @@ This project is an interactive AI chatbot and weather application that integrate
 - Install **OpenCV** for Python:
     ```bash
     pip install opencv-python
-    ```
-- Install **MediaPipe** (for hand tracking):
-    ```bash
-    pip install mediapipe
     ```
 
 ### API Keys
